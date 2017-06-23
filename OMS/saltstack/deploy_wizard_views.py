@@ -203,6 +203,16 @@ def deploy_game_wizard(request, template_name='saltstack/deploy_game_wizard.html
                 # 同步web服务配置
                 context['%s_sync_web_conf' % information['zone']] = do_sync_web_conf(information)
 
+            # 重启服务
+            context['%s_start_redis' % information['WEB_SERVER_HOST']] = \
+                do_deploy_project_to_remote_machine(information['WEB_SERVER_HOST'], 'service.start', 'redis')
+            service_list = ['nginx', 'php-fpm', 'supervisord']
+            for service in service_list:
+                context['%s_start_%s' % (information['WEB_SERVER_HOST'], service)] = \
+                    do_deploy_project_to_remote_machine(information['WEB_SERVER_HOST'], 'service.start', service)
+
+            # 初始化分区数据
+
         else:
             # 生成配置文件并进行文件对比合并
             zone2_object = Zone.objects.filter(id=request.POST.get('previous_zone'))
@@ -266,9 +276,20 @@ def deploy_game_wizard(request, template_name='saltstack/deploy_game_wizard.html
             # 同步web服务配置
             context['%s_sync_nginx_conf' % information['zone']] = do_sync_web_conf(information)
 
-        print json.dumps(context)
+            # 重启服务
 
-        # 重启进服务
+            context['%s_start_tomcat' % information['WAR_DATA_HOST']] = \
+                do_deploy_project_to_remote_machine(information['WAR_DATA_HOST'], 'service.start', 'tomcat')
+            context['%s_start_redis' % information['WEB_SERVER_HOST']] = \
+                do_deploy_project_to_remote_machine(information['WEB_SERVER_HOST'], 'service.start', 'redis')
+            service_list = ['nginx', 'php-fpm', 'supervisord']
+            for service in service_list:
+                context['%s_start_%s' % (information['WEB_SERVER_HOST'], service)] = \
+                    do_deploy_project_to_remote_machine(information['WEB_SERVER_HOST'], 'service.start', service)
+
+            # 初始化分区数据
+
+        print json.dumps(context)
 
         if regex_match_error(json.dumps(context)):
             status = True
