@@ -4,6 +4,7 @@ python 2.7.x
 django 1.7.11
 requests
 IPy
+PyYAML
 </pre>
 
 # salt_api.conf：
