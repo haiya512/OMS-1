@@ -73,22 +73,20 @@ def salt_key_accept(request, minion):
 
         return_comment = key_manager(header, **data1)
         finger = return_comment['data']['return']['minions'][minion]
-        # print finger
-        # print return_comment['data']['_stamp']
-        if minion == MASTER_HOST:
-            if SaltKey.objects.filter(minion=minion):
+
+        if SaltKey.objects.filter(minion=minion):
+            if minion == MASTER_HOST:
                 SaltKey.objects.filter(minion=minion).update(type=u'1', status=1)
             else:
+                SaltKey.objects.filter(minion=minion).update(type=u'2', status=1)
+        else:
+            if minion == MASTER_HOST:
                 keys = SaltKey(minion=minion, type=u'1', finger=finger, timestamp=return_comment['data']['_stamp'],
                                status=1, is_getinfo=0)
-                keys.save()
-        else:
-            if SaltKey.objects.filter(minion=minion):
-                SaltKey.objects.filter(minion=minion).update(type=u'2', status=1)
             else:
                 keys = SaltKey(minion=minion, type=u'2', finger=finger, timestamp=return_comment['data']['_stamp'],
                                status=1, is_getinfo=0)
-                keys.save()
+            keys.save()
 
     return redirect('salt_key_manager')
 
