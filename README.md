@@ -2,6 +2,8 @@
 <pre>
 python 2.7.x
 django 1.7.11
+requests
+IPy
 </pre>
 
 # salt_api.conf：
@@ -31,3 +33,7 @@ rest_cherrypy:
 ./manage.py migrate
 ./manage.py createsuperuser
 </pre>
+
+# 通过salt-api添加服务器
+# 系统设置
+# git仓库设置
