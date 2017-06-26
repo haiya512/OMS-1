@@ -121,6 +121,7 @@ salt_api_password = '071103'
 DESTINATION = []
 SOURCE = []
 MASTER_IP = '192.168.2.229'
+MASTER_HOST = 'test'
 
 GENERATE_URL = "salt://generate/"
 CONF_URL = "salt://config"

@@ -11,7 +11,7 @@ from models import SaltKey
 from saltstack.scripts.execute_command import running_command
 from saltstack.scripts.copy_anything import do_copy
 from saltstack.scripts.salt_api import *
-# from oms_config.generate_file import *
+from OMS.settings import MASTER_HOST
 
 # Create your views here.
 
@@ -76,10 +76,10 @@ def salt_key_accept(request, minion):
         # print finger
         # print return_comment['data']['_stamp']
 
-        if SaltKey.objects.filter(minion=minion):
-            SaltKey.objects.filter(minion=minion).update(status=1)
+        if minion == MASTER_HOST and SaltKey.objects.filter(minion=minion):
+            SaltKey.objects.filter(minion=minion).update(type=1, status=1)
         else:
-            keys = SaltKey(minion=minion, finger=finger, timestamp=return_comment['data']['_stamp'],
+            keys = SaltKey(minion=minion, type=2, finger=finger, timestamp=return_comment['data']['_stamp'],
                            status=1, is_getinfo=0)
             keys.save()
 
