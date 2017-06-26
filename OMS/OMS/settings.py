@@ -128,6 +128,6 @@ CONF_URL = "salt://config"
 SCRIPT_URL = "salt://script"
 
 
-war_data_git_url = 'https://zhoufr:NkdpDxHNLqZH@git.pythonic.in/wuhan/pxqb-data2.git'
-web_base_git_url = 'https://zhoufr:NkdpDxHNLqZH@git.pythonic.in/wuhan/pxqb.git'
-web_login_git_url = 'https://zhoufr:NkdpDxHNLqZH@git.pythonic.in/wuhan/pxqb_web.git'
+war_data_git_url = ''
+web_base_git_url = ''
+web_login_git_url = ''
