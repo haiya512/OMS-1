@@ -33,8 +33,10 @@ rest_cherrypy:
 ./manage.py makemigrations
 ./manage.py migrate
 ./manage.py createsuperuser
+./manage.py runserver 0.0.0.0:8000
 </pre>
-
+打开浏览器输入http://ipaddress/dashboard/
+![dashboard](images/DAE2AF1E-6AE7-47EC-9DC4-3DDA4848B2E3.png)
 # 通过salt-api添加服务器
 
 saltstack --> minion菜单
