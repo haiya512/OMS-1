@@ -37,3 +37,5 @@ rest_cherrypy:
 # 通过salt-api添加服务器
 # 系统设置
 # git仓库设置
+# saltstack功能介绍
+# 安装软件包
