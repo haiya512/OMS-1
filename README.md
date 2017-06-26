@@ -25,3 +25,9 @@ rest_cherrypy:
   webhook_disable_auth: True
   webhook_url: /hook
 </pre>
+# 创建数据库及创建用户
+<pre>
+./manage.py makemigrations
+./manage.py migrate
+./manage.py createsuperuser
+</pre>
