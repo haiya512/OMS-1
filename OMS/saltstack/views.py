@@ -50,6 +50,7 @@ def salt_key_manager(request, template_name='saltstack/salt_introduction.html'):
 @login_required
 @permission_required('saltstack.view_release', raise_exception=True)
 def salt_key_accept(request, minion):
+    # 接受key
     data = {
         'expr_form': 'list',
         'client': 'wheel',
@@ -61,7 +62,6 @@ def salt_key_accept(request, minion):
     salt.get_token()
     header = salt.get_header()
     content = key_manager(header, **data)
-    print content
 
     if content['data']['success']:
         data1 = {
@@ -73,7 +73,7 @@ def salt_key_accept(request, minion):
 
         return_comment = key_manager(header, **data1)
         finger = return_comment['data']['return']['minions'][minion]
-
+        # 将key信息存入数据库
         if SaltKey.objects.filter(minion=minion):
             if minion == MASTER_HOST:
                 SaltKey.objects.filter(minion=minion).update(type=u'1', status=1)
