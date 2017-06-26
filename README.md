@@ -36,9 +36,12 @@ rest_cherrypy:
 </pre>
 
 # 通过salt-api添加服务器
+
+saltstack --> minion菜单
 ![salt-minion](images/5DE3EB0E-6582-4E1D-8411-1FB0065C5C26.png)
 ![accept_key_1](images/1562F3E5-3788-4A47-A913-D3BE1D0FB7EA.png)
 ![accept_key_2](images/99035F49-DD81-40BC-B7A9-27969212522D.png)
+获取信息按钮，可将minion信息存入数据库！
 
 # 系统设置
 # git仓库设置
