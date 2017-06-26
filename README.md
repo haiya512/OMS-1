@@ -1,6 +1,9 @@
-# OMS
-# 资产管理
-# 集中化管理
+# OMS环境需求:
+<pre>
+python 2.7.x
+django 1.7.11
+</pre>
+
 # salt_api.conf：
 <pre>
 external_auth:
