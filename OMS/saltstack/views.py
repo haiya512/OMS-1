@@ -77,9 +77,9 @@ def salt_key_accept(request, minion):
         # print return_comment['data']['_stamp']
 
         if minion == MASTER_HOST and SaltKey.objects.filter(minion=minion):
-            SaltKey.objects.filter(minion=minion).update(type=1, status=1)
+            SaltKey.objects.filter(minion=minion).update(type=u'1', status=1)
         else:
-            keys = SaltKey(minion=minion, type=2, finger=finger, timestamp=return_comment['data']['_stamp'],
+            keys = SaltKey(minion=minion, type=u'2', finger=finger, timestamp=return_comment['data']['_stamp'],
                            status=1, is_getinfo=0)
             keys.save()
 
