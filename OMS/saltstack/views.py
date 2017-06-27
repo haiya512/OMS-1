@@ -162,7 +162,7 @@ def get_servers_info(request, minion):
                 if address.iptype() == 'PRIVATE':
                     ip_address['private'] = ip
                     ip_address['public'] = None
-                elif:
+                else:
                     ip_address['private'] = None
                     ip_address['public'] = ip
 
@@ -170,17 +170,22 @@ def get_servers_info(request, minion):
     # 检查数据库中是否存在，如果不存在则存入
     try:
         if ip_address['private']:
+            print "private true"
             Network.objects.get(private_address=ip_address['private'])
         else:
+            print "public true"
             Network.objects.get(public_address=ip_address['public'])
     except Network.DoesNotExist:
         if ip_address['private']:
+            print "private is true, but not found in mysql and insert insto mysql"
             nets = Network(private_address=ip_address['private'], public_address=u'------', bandwidth=0, unit=1, bind=0,
                            net_type=1, provide=u'腾讯云')
         elif ip_address['public']:
+            print "public is true, but not found in mysql and insert into mysql"
             nets = Network(public_address=ip_address['public'], private_address=u'------', bandwidth=0, unit=1, bind=0,
                            net_type=1, provide=u'腾讯云')
         else:
+            print "private and public is true, but not found in mysql and insert into mysql"
             nets = Network(public_address=ip_address['public'], private_address=ip_address['private'], bandwidth=0,
                            unit=1, bind=0, net_type=1, provide=u'------')
         nets.save()
