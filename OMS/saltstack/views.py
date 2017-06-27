@@ -157,13 +157,16 @@ def get_servers_info(request, minion):
             pass
         else:
             ip = context[minion]['ip4_interfaces'][key][0]
-            # if ip:
-            address = IP(ip)
-            if address.iptype() == 'PRIVATE':
-                ip_address['private'] = ip
-            else:
-                ip_address['public'] = ip
+            if ip:
+                address = IP(ip)
+                if address.iptype() == 'PRIVATE':
+                    ip_address['private'] = ip
+                    ip_address['public'] = None
+                elif:
+                    ip_address['private'] = None
+                    ip_address['public'] = ip
 
+    print ip_address
     # 检查数据库中是否存在，如果不存在则存入
     try:
         if ip_address['private']:
