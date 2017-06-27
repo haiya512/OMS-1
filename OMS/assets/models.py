@@ -91,8 +91,8 @@ class Assets(models.Model):
     )
 
     OS_CHOICES = (
-        (u'1', u'CentOS 7.2 X86 64bit'),
-        (u'2', u'CentOS 7.0 x86 64bit'),
+        (u'1', u'RedHat'),
+        (u'2', u'CentOS'),
     )
 
     host_name = models.CharField(max_length=50, verbose_name=u'主机名', unique=True)

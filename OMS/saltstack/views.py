@@ -214,7 +214,7 @@ def get_servers_info(request, minion):
                 hardware = Hardware(name=item, value=disks[item], unit=1)
                 hardware.save()
 
-    if context[minion]['oscodename'] == 'CentOS Linux 7 (Core)':
+    if context[minion]['osfullname'] == 'CentOS':
         system = 2
     else:
         system = 1
