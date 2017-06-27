@@ -29,6 +29,9 @@ rest_cherrypy:
   webhook_url: /hook
 </pre>
 # 创建数据库及创建用户
+<pre>
+CREATE DATABASE `OMS` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci
+</pre>
 settings.py里面的注意事项:
 <pre>
 DATABASES = {
