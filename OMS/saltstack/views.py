@@ -11,7 +11,7 @@ from models import SaltKey
 from saltstack.scripts.execute_command import running_command
 from saltstack.scripts.copy_anything import do_copy
 from saltstack.scripts.salt_api import *
-from OMS.settings import MASTER_HOST
+from OMS.settings import MASTER_HOST, SHELL_ROOT
 
 # Create your views here.
 
@@ -245,7 +245,8 @@ def get_servers_info(request, minion):
 
 @login_required
 def sync_grains(request, minion):
-    print minion
-    script = 'sh /data/deploy/OMS/saltstack/scripts/shell/sync_model.sh'
-    if running_command(script):
+    script = os.path.join(SHELL_ROOT, 'sync_model.sh')
+    command = "sh %s" % script
+    print command
+    if running_command(command):
         return HttpResponse('OK')

@@ -115,7 +115,7 @@ SALT_FILES_ROOT = '/srv/salt/'
 
 salt_api_url = 'https://192.168.2.229:8000/'
 salt_api_user = 'Jack'
-salt_api_password = '071103'
+salt_api_password = 'test'
 
 
 DESTINATION = []
@@ -131,3 +131,5 @@ SCRIPT_URL = "salt://script"
 war_data_git_url = ''
 web_base_git_url = ''
 web_login_git_url = ''
+
+SHELL_ROOT=os.path.join(BASE_DIR, 'saltstack/scripts/shell').replace('\\', '/'),
