@@ -149,8 +149,6 @@ def get_servers_info(request, minion):
     header = salt.get_header()
     context = get_grains_items(header, minion)
     print context
-    global ip_address
-    global disks
     ip_address = {}
     disks = {}
     # 取得ip地址信息存入ip_address字典中
@@ -159,12 +157,12 @@ def get_servers_info(request, minion):
             pass
         else:
             ip = context[minion]['ip4_interfaces'][key][0]
-            if ip:
-                address = IP(ip)
-                if address.iptype() == 'PRIVATE':
-                    ip_address['private'] = ip
-                else:
-                    ip_address['public'] = ip
+            # if ip:
+            address = IP(ip)
+            if address.iptype() == 'PRIVATE':
+                ip_address['private'] = ip
+            else:
+                ip_address['public'] = ip
 
     # 检查数据库中是否存在，如果不存在则存入
     try:
