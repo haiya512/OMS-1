@@ -132,5 +132,4 @@ war_data_git_url = ''
 web_base_git_url = ''
 web_login_git_url = ''
 
-SHELL_ROOT=os.path.join(BASE_DIR, 'saltstack').replace('\\', '/')
-SHELL_URL = '/saltstack/scripts/shell'
+SHELL_URL = '/data/deploy/OMS/saltstack/scripts/shell'
