@@ -179,11 +179,11 @@ def get_servers_info(request, minion):
         if ip_address['private']:
             print "private is true, but not found in mysql and insert insto mysql"
             nets = Network(private_address=ip_address['private'], public_address=u'------', bandwidth=0, unit=1, bind=0,
-                           net_type=1, provide=u'腾讯云')
+                           net_type=1, provide='腾讯云')
         elif ip_address['public']:
             print "public is true, but not found in mysql and insert into mysql"
-            nets = Network(public_address=ip_address['public'], private_address=u'------', bandwidth=0, unit=1, bind=0,
-                           net_type=1, provide=u'腾讯云')
+            nets = Network(private_address=u'------', public_address=ip_address['public'], bandwidth=0, unit=1, bind=0,
+                           net_type=1, provide='腾讯云')
         else:
             print "private and public is true, but not found in mysql and insert into mysql"
             nets = Network(public_address=ip_address['public'], private_address=ip_address['private'], bandwidth=0,
