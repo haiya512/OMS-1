@@ -156,38 +156,28 @@ def get_servers_info(request, minion):
         if key == 'lo' or key == 'usb0':
             pass
         else:
+            ip_address['private'] = None
+            ip_address['public'] = None
             ip = context[minion]['ip4_interfaces'][key][0]
             if ip:
                 address = IP(ip)
                 if address.iptype() == 'PRIVATE':
                     ip_address['private'] = ip
-                    ip_address['public'] = None
                 else:
-                    ip_address['private'] = None
                     ip_address['public'] = ip
 
     print ip_address
     # 检查数据库中是否存在，如果不存在则存入
     try:
         if ip_address['private']:
-            print "private true"
-            Network.objects.get(private_address=ip_address['private'])
+            if Network.objects.get(private_address=ip_address['private']):
+                print "The record in table nothing to do!"
         else:
-            print "public true"
-            Network.objects.get(public_address=ip_address['public'])
+            if Network.objects.get(public_address=ip_address['public']):
+                print "The record in table nothing to do!"
     except Network.DoesNotExist:
-        if ip_address['private']:
-            print "private is true, but not found in mysql and insert insto mysql"
-            nets = Network(private_address=ip_address['private'], public_address=u'------', bandwidth=0, unit=1, bind=0,
-                           net_type=1, provide='腾讯云')
-        elif ip_address['public']:
-            print "public is true, but not found in mysql and insert into mysql"
-            nets = Network(private_address=u'------', public_address=ip_address['public'], bandwidth=0, unit=1, bind=0,
-                           net_type=1, provide='腾讯云')
-        else:
-            print "private and public is true, but not found in mysql and insert into mysql"
-            nets = Network(public_address=ip_address['public'], private_address=ip_address['private'], bandwidth=0,
-                           unit=1, bind=0, net_type=1, provide=u'------')
+        nets = Network(public_address=ip_address['public'], private_address=ip_address['private'], bandwidth=0, 
+                       unit=1, bind=0, net_type=1, provide=u'------')
         nets.save()
 
     # 检查cpu配置，如果没有则存入
