@@ -149,7 +149,10 @@ def get_servers_info(request, minion):
     header = salt.get_header()
     context = get_grains_items(header, minion)
     print context
+    global ip_address
+    global disks
     ip_address = {}
+    disks = {}
     # 取得ip地址信息存入ip_address字典中
     for key in context[minion]['ip4_interfaces']:
         if key == 'lo' or key == 'usb0':
@@ -201,7 +204,6 @@ def get_servers_info(request, minion):
         hardware.save()
 
     # 检查磁盘，如果不存在存入
-    disks = {}
     for key in context[minion]:
         pattern = re.compile(r'[s-v]d[a-z]_size$')
         m = pattern.match(key)
