@@ -90,19 +90,13 @@ class Assets(models.Model):
         (u'3', u'虚拟机'),
     )
 
-    OS_CHOICES = (
-        (u'1', u'RedHat'),
-        (u'2', u'CentOS'),
-    )
-
     host_name = models.CharField(max_length=50, verbose_name=u'主机名', unique=True)
     alias_name = models.CharField(max_length=100, verbose_name=u'可见名', blank=True, null=True)
     host_type = models.CharField(max_length=10, blank=True, null=True,
                                  choices=HOST_TYPE_CHOICES, verbose_name=u'主机类型')
     tag = models.ManyToManyField(Tag, verbose_name=u'标识')
     game_zone = models.ManyToManyField(Zone, verbose_name=u'游戏区')
-    os = models.CharField(max_length=10, blank=True, null=True,
-                          choices=OS_CHOICES, verbose_name=u'操作系统')
+    os = models.CharField(max_length=50, blank=True, null=True, verbose_name=u'操作系统')
     superuser = models.CharField(max_length=20, verbose_name=u'管理员', default=u'root')
     superuser_pass = models.CharField(max_length=50, verbose_name=u'管理员密码', blank=True, null=True)
     is_online = models.BooleanField(blank=True, default=False, verbose_name=u'在线')

@@ -214,10 +214,7 @@ def get_servers_info(request, minion):
                 hardware = Hardware(name=item, value=disks[item], unit=1)
                 hardware.save()
 
-    if context[minion]['osfullname'] == 'CentOS':
-        system = 2
-    else:
-        system = 1
+    system = context[minion]['osfinger']
 
     # 检查资产,没有存入，并检查关联
     try:
