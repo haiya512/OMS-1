@@ -153,15 +153,16 @@ def get_servers_info(request, minion):
     ip_address = {}
     # 取得ip地址信息存入ip_address字典中
     for key in context[minion]['ip4_interfaces']:
-        if key == 'lo':
+        if key == 'lo' or key == 'usb0':
             pass
         else:
             ip = context[minion]['ip4_interfaces'][key][0]
-            address = IP(ip)
-            if address.iptype() == 'PRIVATE':
-                ip_address['private'] = ip
-            else:
-                ip_address['public'] = ip
+            if ip:
+                address = IP(ip)
+                if address.iptype() == 'PRIVATE':
+                    ip_address['private'] = ip
+                else:
+                    ip_address['public'] = ip
 
     # 检查数据库中是否存在，如果不存在则存入
     try:
@@ -231,30 +232,15 @@ def get_servers_info(request, minion):
             networks = Network.objects.get(public_address=ip_address['public'])
         cpu_cores = Hardware.objects.get(name='cpu', value=context[minion]['num_cpus'])
         memories = Hardware.objects.get(name='memory', value=mem)
-        # print memories
-        # system_users = SysUser.objects.filter(sys_user='root')
-        # print system_users
 
-        # if system_users:
-        #     pass
-        # else:
-        #     system_users = SysUser(sys_user=u'root', sys_pass=u'------')
-        #     system_users.save()
-
-        # get_users = get_object_or_404(Assets, superuser=u'root')
-        # print get_users.id
         assets = Assets(host_name=minion, alias_name=minion, host_type=2, os=system, is_online=True,
                         is_minion=1, is_unused=False, superuser=u'root', superuser_pass=u'------')
         assets.networks_id = networks.id
         assets.save()
         assets.hardware.add(cpu_cores.id, memories.id)
-        # assets.sys_users.add(get_users.id)
-        # print disks
         for item in disks:
-            # print item
             disk = Hardware.objects.get(name=item, value=disks[item])
             disk_id = disk.id
-            # print disk_id
             assets.hardware.add(disk_id)
         Network.objects.filter(id=networks.id).update(bind=1)
 
