@@ -15,6 +15,7 @@ from saltstack.scripts.salt_api import *
 from scripts.merge_pxqb_base_conf import merge_all_server, do_copy_new_file
 from oms_config.generate_file import execute_replace
 from saltstack.scripts.re_match_result import regex_match_error
+from OMS.settings import SHELL_ROOT
 import json
 
 
@@ -84,9 +85,10 @@ def merge_server_process(request, template_name='saltstack/merge_server_form.htm
         # 合并、复制、生成新配置
         for project_name in project_list:
             if project_name == 'war_data':
-                script = "sh /data/deploy/OMS/saltstack/scripts/shell/merge_config_file.sh '%s' '%s' '%s' '%s' '%s'" \
-                          % (source_path, merge_path, zone_shell_array, merge_name, project_name)
-                # print script
+                shell_script = os.path.join(SHELL_ROOT, 'merge_config_file.sh')
+                script = "sh %s '%s' '%s' '%s' '%s' '%s'" \
+                          % (shell_script, source_path, merge_path, zone_shell_array, merge_name, project_name)
+                print script
                 running_command(script)
 
             if project_name == 'pxqb_base':
@@ -116,9 +118,10 @@ def merge_server_process(request, template_name='saltstack/merge_server_form.htm
                     copy_target_path = os.path.join(merge_path, merge_name)
                     if not os.path.exists(copy_target_path):
                         makedir_p(copy_target_path)
-                    script = "sh /data/deploy/OMS/saltstack/scripts/shell/copy_pxqb_login_config.sh %s %s %s" \
-                             % (full_project_name, copy_target_path, zone)
-                    # print script
+                    shell_script = os.path.join(SHELL_ROOT, 'copy_pxqb_login_config.sh')
+                    script = "sh %s %s %s %s" \
+                             % (shell_script, full_project_name, copy_target_path, zone)
+                    print script
                     running_command(script)
 
         # 同步配置

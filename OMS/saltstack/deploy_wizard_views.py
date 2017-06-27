@@ -14,6 +14,7 @@ from saltstack.scripts.create_folder import makedir_p
 from scripts.execute_command import running_command
 from scripts.re_match_result import regex_match_error
 from OMS.settings import web_login_git_url, war_data_git_url, web_base_git_url
+from OMS.settings import SHELL_ROOT
 import copy
 import json
 
@@ -228,8 +229,10 @@ def deploy_game_wizard(request, template_name='saltstack/deploy_game_wizard.html
             zone_shell_array = '%s %s' % (information['previous_zone'], information['zone'])      # 游戏分区数组 shell用
 
             project_name = 'war_data'
-            command = "sh /data/deploy/OMS/saltstack/scripts/shell/merge_config_file.sh '%s' '%s' '%s' '%s' '%s'" \
-                      % (source_root_path, shared_root_path, zone_shell_array, merge_name, project_name)
+            shell_script = os.path.join(SHELL_ROOT, 'merge_config_file.sh')
+            command = "sh %s '%s' '%s' '%s' '%s' '%s'" \
+                      % (shell_script, source_root_path, shared_root_path, zone_shell_array, merge_name, project_name)
+            print command
             # 执行合并脚本
             running_command(command)
 
