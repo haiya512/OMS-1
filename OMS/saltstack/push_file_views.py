@@ -3,7 +3,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, redirect, Http404, get_object_or_404, HttpResponse
-from OMS.settings import SHELL_ROOT
+from OMS.settings import SHELL_URL
 from assets.models import Assets
 from departments.models import Department
 from forms import PushForm, Unix2DosForm
@@ -50,7 +50,7 @@ def push_process(request, template_name='saltstack/file_push_form.html'):
 
         if not os.path.exists(conf_generate_path):
             makedir_p(conf_generate_path)
-        shell_script = os.path.join(SHELL_ROOT, 'replace_service_conf.sh')
+        shell_script = os.path.join(SHELL_URL, 'replace_service_conf.sh')
         commands = "sh %s %s %s %s %s %s %s" % \
                    (shell_script, file_name, generate_file, domain, zone, conf_templates_path, conf_generate_path)
 
